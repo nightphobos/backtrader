@@ -1143,8 +1143,7 @@ class Cerebro(with_metaclass(MetaParams, object)):
                     data._start()
                     if self._dopreload:
                         data.preload()
-
-            pool = multiprocessing.Pool(self.p.maxcpus or None)
+            pool = multiprocessing.get_context("fork").Pool(self.p.maxcpus or None)
             for r in pool.imap(self, iterstrats):
                 self.runstrats.append(r)
                 for cb in self.optcbs:
